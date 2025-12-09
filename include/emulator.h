@@ -3,4 +3,6 @@
 
 #include "commons.h"
 
+int emu_start(const char*);
+
 #endif

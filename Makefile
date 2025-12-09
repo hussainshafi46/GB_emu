@@ -8,10 +8,10 @@ UNAME := $(shell uname)
 
 ifeq ($(UNAME), Linux)
     EMU_LIB_NAME = libemulator.so
-    LD_FLAGS = -L$(OBJDIR) -lemulator
+    LD_FLAGS = -L$(OBJDIR) -Wl,-rpath=. -lemulator 
 else ifeq ($(UNAME), Darwin)
     EMU_LIB_NAME = libemulator.dylib
-    LD_FLAGS = -L$(OBJDIR) -lemulator
+    LD_FLAGS = -L$(OBJDIR) -Wl,-rpath,. -lemulator
 else
     EMU_LIB_NAME = libemulator.dll
     LD_FLAGS = -L$(OBJDIR) -lemulator
@@ -26,7 +26,7 @@ LIB_OBJECTS = $(patsubst $(LIBDIR)/%.c,$(OBJDIR)/%.o,$(LIB_SOURCES))
 MAIN_OBJECT = $(patsubst %.c,$(OBJDIR)/%.o,$(MAIN_SOURCE))
 
 CC = gcc
-CFLAGS = -Wall -Wextra -g -I$(INCLUDEDIR)
+CFLAGS = -Wall -Wextra -Werror -g -I$(INCLUDEDIR)
 LDFLAGS = $(LD_FLAGS)
 
 .PHONY: all clean
@@ -51,7 +51,10 @@ $(MAIN_OBJECT): $(MAIN_SOURCE) | $(OBJDIR)
 $(TARGET): $(MAIN_OBJECT) $(EMU_LIB)
 	@echo "--> Linking executable: $@"
 	$(CC) $(MAIN_OBJECT) $(LDFLAGS) -o $@
+	
+	@cp $(EMU_LIB) .
 
 clean:
-	@echo "--> Cleaning up build directory ($(OBJDIR)) and executable ($(TARGET))"
-	@-rm -rf $(OBJDIR) $(TARGET)
+	@echo "--> Cleaning up build directory ($(OBJDIR)), executable ($(TARGET)), and library ($(EMU_LIB_NAME))"
+	@-rm -rf $(OBJDIR)
+	@-rm -f $(TARGET) $(EMU_LIB_NAME)

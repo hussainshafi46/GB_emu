@@ -5,5 +5,5 @@ int main(int argc, char** argv) {
         LOG_ERROR("USAGE: %s <ROM FILE>", argv[0]);
         return -1;
     }
-    return 0;
+    return emu_start(argv[1]);
 }
