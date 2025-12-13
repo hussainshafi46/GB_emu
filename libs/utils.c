@@ -68,6 +68,21 @@ void cpu_step(GB_CPU *cpu, GB_MMU *mmu) {
             break;
         }
 
+        // PUSH
+        case 0xC5: case 0xD5:
+        case 0xE5: case 0xF5: {
+            r_register = (opcode >> 4) & 3;
+            push(cpu, mmu, r_register);
+            break;
+        }
+        // POP
+        case 0xC1: case 0xD1:
+        case 0xE1: case 0xF1: {
+            r_register = (opcode >> 4) & 3;
+            pop(cpu, mmu, r_register);
+            break;
+        }
+
         default:
          // TODO: if-else ladder to group instructions
             // row = ((opcode & 0xF0) >> 1);
