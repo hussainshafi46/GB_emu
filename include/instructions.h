@@ -11,5 +11,7 @@ void dec8(GB_CPU*, GB_MMU*, int);
 void push(GB_CPU*, GB_MMU*, int);
 void pop(GB_CPU*, GB_MMU*, int);
 void bitwise_operations(GB_CPU*, GB_MMU*, int, char);
+void ld_r2r(GB_CPU*, GB_MMU*, int, int);
+void ld_n82r(GB_CPU*, GB_MMU*, int);
 
 #endif

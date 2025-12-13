@@ -1,0 +1,23 @@
+#include "instructions.h"
+
+/*
+Implementations for all LD instructions
+*/
+void ld_r2r(GB_CPU *cpu, GB_MMU *mmu, int r1_register, int r2_register) {
+    uint8_t value = r2_register == 6 ? bus_read(mmu, cpu->HL) : *cpu->reg8[r2_register];
+    if (r1_register == 6)
+        bus_write(mmu, cpu->HL, value);
+    else
+        *cpu->reg8[r1_register] = value;
+    cpu->cpu_cycles++;
+    cpu->machine_cycles += r2_register == 6 || r1_register == 6 ? 8 : 4;
+}
+void ld_n82r(GB_CPU *cpu, GB_MMU *mmu, int r1_register) {
+    uint8_t value = bus_read(mmu, cpu->PC++);
+    if (r1_register == 6)
+        bus_write(mmu, cpu->HL, value);
+    else
+        *cpu->reg8[r1_register] = value;
+    cpu->cpu_cycles += 2;
+    cpu->machine_cycles += r1_register == 6 ? 12 : 8;
+}
