@@ -75,11 +75,42 @@ void cpu_step(GB_CPU *cpu, GB_MMU *mmu) {
             push(cpu, mmu, r_register);
             break;
         }
+
         // POP
         case 0xC1: case 0xD1:
         case 0xE1: case 0xF1: {
             r_register = (opcode >> 4) & 3;
             pop(cpu, mmu, r_register);
+            break;
+        }
+
+        // AND
+        case 0xA0: case 0xA1:
+        case 0xA2: case 0xA3:
+        case 0xA4: case 0xA5:
+        case 0xA6: case 0xA7: {
+            r_register = opcode & 0x07;
+            bitwise_operations(cpu, mmu, r_register, '&');
+            break;
+        }
+
+        // OR
+        case 0xB0: case 0xB1:
+        case 0xB2: case 0xB3:
+        case 0xB4: case 0xB5:
+        case 0xB6: case 0xB7: {
+            r_register = opcode & 0x07;
+            bitwise_operations(cpu, mmu, r_register, '|');
+            break;
+        }
+
+        // XOR
+        case 0xA8: case 0xA9:
+        case 0xAA: case 0xAB:
+        case 0xAC: case 0xAD:
+        case 0xAE: case 0xAF: {
+            r_register = opcode & 0x07;
+            bitwise_operations(cpu, mmu, r_register, '^');
             break;
         }
 
