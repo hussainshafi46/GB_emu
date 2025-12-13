@@ -19,7 +19,7 @@ void push(GB_CPU* cpu, GB_MMU *mmu, int r_register) {
 /*
 Implementations for all POP instructions
 */
-void pop(GB_CPU* cpu, GB_MMU *mmu, int r_register) {
+void pop(GB_CPU *cpu, GB_MMU *mmu, int r_register) {
     uint8_t low = bus_read(mmu, cpu->SP++);
     uint8_t high = bus_read(mmu, cpu->SP++);
     

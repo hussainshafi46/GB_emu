@@ -8,5 +8,7 @@ void inc16(GB_CPU*, int);
 void inc8(GB_CPU*, GB_MMU*, int);
 void dec16(GB_CPU*, int);
 void dec8(GB_CPU*, GB_MMU*, int);
+void push(GB_CPU*, GB_MMU*, int);
+void pop(GB_CPU*, GB_MMU*, int);
 
 #endif
