@@ -144,6 +144,12 @@ void cpu_step(GB_CPU *cpu, GB_MMU *mmu) {
             ld_n82r(cpu, mmu, r1_register);
             break;
         }
+        case 0x01: case 0x11:
+        case 0x21: case 0x31: {
+            r1_register = (opcode >> 4) & 3;
+            ld_n162r16(cpu, mmu, r1_register);
+            break;
+        }
 
         default:
          // TODO: if-else ladder to group instructions

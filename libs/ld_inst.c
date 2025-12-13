@@ -21,3 +21,14 @@ void ld_n82r(GB_CPU *cpu, GB_MMU *mmu, int r1_register) {
     cpu->cpu_cycles += 2;
     cpu->machine_cycles += r1_register == 6 ? 12 : 8;
 }
+void ld_n162r16(GB_CPU *cpu, GB_MMU *mmu, int r1_register) {
+    /*
+    uint16_t bus_read16(GB_MMU *mmu, uint16_t address) {
+        return (bus_read(mmu, address + 1) << 8) | bus_read(mmu, address);
+    }
+    */
+    *cpu->reg16[r1_register] = bus_read16(mmu, cpu->PC);
+    cpu->PC += 2; // increment PC after reading from memory
+    cpu->cpu_cycles += 3;
+    cpu->machine_cycles += 12;
+}
