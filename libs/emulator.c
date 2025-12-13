@@ -11,6 +11,15 @@ int emu_start(const char* cartridge_file) {
     GB_Cart cart_header;
     read_cart_header(cart_file, &cart_header);
 
+    GB_CPU cpu;
+    GB_MMU mmu;
+
+    while (!cpu.is_halted && !cpu.is_stopped) {
+        cpu_step(&cpu, &mmu);
+    }
+    
+
+
     fclose(cart_file);
     return 0;
 }
