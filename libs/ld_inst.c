@@ -32,3 +32,23 @@ void ld_n162r16(GB_CPU *cpu, GB_MMU *mmu, int r1_register) {
     cpu->cpu_cycles += 3;
     cpu->machine_cycles += 12;
 }
+void ld_r82a16(GB_CPU *cpu, GB_MMU *mmu, int r1_register) {
+    if (r1_register == 2)
+        bus_write(mmu, cpu->HL++, cpu->A);
+    else if (r1_register == 3)
+        bus_write(mmu, cpu->HL--, cpu->A);
+    else
+        bus_write(mmu, cpu->reg16[r1_register], cpu->A);
+    cpu->cpu_cycles++;
+    cpu->machine_cycles += 8;
+}
+void ld_a162r8(GB_CPU *cpu, GB_MMU *mmu, int r1_register) {
+    if (r1_register == 2)
+        cpu->A = bus_read(mmu, cpu->HL++);
+    else if (r1_register == 3)
+        cpu->A = bus_read(mmu, cpu->HL--);
+    else
+        cpu->A = bus_read(mmu, cpu->reg16[r1_register]);
+    cpu->cpu_cycles++;
+    cpu->machine_cycles += 8;
+}

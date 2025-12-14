@@ -150,6 +150,18 @@ void cpu_step(GB_CPU *cpu, GB_MMU *mmu) {
             ld_n162r16(cpu, mmu, r1_register);
             break;
         }
+        case 0x02: case 0x12:
+        case 0x22: case 0x32: {
+            r1_register = (opcode >> 4) & 3;
+            ld_r82a16(cpu, mmu, r1_register);
+            break;
+        }
+        case 0x0A: case 0x1A:
+        case 0x2A: case 0x3A: {
+            r1_register = (opcode >> 4) & 3;
+            ld_a162r8(cpu, mmu, r1_register);
+            break;
+        }
 
         default:
          // TODO: if-else ladder to group instructions

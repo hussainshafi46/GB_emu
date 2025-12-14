@@ -14,5 +14,7 @@ void bitwise_operations(GB_CPU*, GB_MMU*, int, char);
 void ld_r2r(GB_CPU*, GB_MMU*, int, int);
 void ld_n82r(GB_CPU*, GB_MMU*, int);
 void ld_n162r16(GB_CPU*, GB_MMU*, int);
+void ld_r82a16(GB_CPU*, GB_MMU*, int);
+void ld_a162r8(GB_CPU*, GB_MMU*, int);
 
 #endif
